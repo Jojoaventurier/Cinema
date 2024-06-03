@@ -16,3 +16,14 @@
     
 
 --b. Liste des films dont la durée excède 2h15, classés par durée (du + long au + court)
+
+
+--c
+
+
+--d
+
+--e
+
+
+--f
