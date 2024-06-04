@@ -24,3 +24,5 @@
 --e. Nombre de films par réalisateur (classés dans l'ordsre décroissant)
 
 --f. Casting d'un film en particulier (id_film): nom, prénom des acteurs + sexe
+
+--g. Films tournés par un acteur en particulier (id_acteur)
