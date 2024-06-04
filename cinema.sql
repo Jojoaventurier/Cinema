@@ -75,9 +75,16 @@
     RIGHT JOIN realisateur re ON p.id_personne = re.id_personne
     WHERE nom IS NOT NULL
 
---i. Liste des films qui ont moins de 5 ans (classés du plus récent au plus ancien)
+--i. Liste des films qui ont moins de 24 ans (classés du plus récent au plus ancien)
+
+    SELECT *
+    FROM film
+    WHERE DATE_FORMAT(anneeSortieFrance, "%Y") > 2000 
+    ORDER BY DATE_FORMAT(anneeSortieFrance, "%Y")
 
 --j. Nombre d'hommes et de femmes parmis les acteurs
+
+    
 
 --k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
 
