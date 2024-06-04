@@ -17,13 +17,10 @@
 
 --b. Liste des films dont la durée excède 2h15, classés par durée (du + long au + court)
 
+--c. Liste des films d'un réalisateur (en précisant l'année de sortie)
 
---c
+--d. Nombre de films par genre (classés dans l'ordre décroissant)
 
+--e. Nombre de films par réalisateur (classés dans l'ordsre décroissant)
 
---d
-
---e
-
-
---f
+--f. Casting d'un film en particulier (id_film): nom, prénom des acteurs + sexe
