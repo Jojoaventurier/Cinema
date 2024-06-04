@@ -90,6 +90,13 @@
 FROM acteur a, personne p
 WHERE a.id_personne = p.id_personne
 
+/*SELECT
+  SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) as MaleCount,
+  SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) as FemaleCount,
+  COUNT(*) as TotalCount
+FROM student
+WHERE registeredYear = 2013*/
+
 
 --k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
 
