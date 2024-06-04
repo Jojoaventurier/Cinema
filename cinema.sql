@@ -1,19 +1,31 @@
 --a. Les informations d'un film (id_film) : titre, année, durée (au format HH:MM) et réalisateur
 
-    SELECT id_film, titre, anneeSortieFrance, DATE_FORMAT(duree, "%H:%i"), prenom, nom
-    FROM film f, personne p, realisateur re
-    WHERE f.id_realisateur = re.id_realisateur
-    AND p.id_personne = re.id_personne
-    ORDER BY titre
-
-        -- si on souhaite choisir un film en particuler :
-
-            SELECT id_film, titre, anneeSortieFrance, DATE_FORMAT(duree, "%H:%i"), prenom, nom
-            FROM film f, personne p, realisateur re
-            WHERE f.id_realisateur = re.id_realisateur
-            AND p.id_personne = re.id_personne
-            AND id_film = 1 --remplacer l'id que l'on souhaite vérifier
+SELECT id_film,
+		 titre,
+		 YEAR(anneeSortieFrance) AS 'année de sortie',
+		 CONCAT(FLOOR(duree/60), ' heure(s) et ',ROUND((duree/60 - FLOOR(duree/60)) * 60), ' minute(s)') AS 'durée',
+		 prenom,
+		 nom 
+FROM film f, personne p, realisateur re
+WHERE f.id_realisateur = re.id_realisateur
+AND p.id_personne = re.id_personne
+ORDER BY titre
     
+/*
+SELECT FORMAT(FLOOR(duree/60)*100 + (duree/60-FLOOR(duree/60))*60,'00:00')
+FROM film
+
+SELECT titre, duree, FORMAT(FLOOR(duree/60)*100 + (duree/60*1.00-FLOOR(duree/60)*1.00)*60,'00:00')
+FROM film
+
+
+SELECT duree/60 AS input, CONCAT(FLOOR(duree/60)':', ((duree/60 - FLOOR(duree/60)) * 60))
+FROM film
+
+SELECT duree/60 AS input, FLOOR(duree/60) AS hours, ROUND((duree/60 - FLOOR(duree/60)) * 60) AS minutes
+FROM film
+*/
+
 
 --b. Liste des films dont la durée excède 2h15, classés par durée (du + long au + court)
 
@@ -52,7 +64,7 @@
     SELECT nom, prenom, sexe, nomRole
     FROM personne p, acteur a, film f, casting c, role r
     WHERE p.id_personne = a.id_personne
-    AND a.id_acteur = c.id_acteur
+    AND a.id_acteur = c.id_acteur 
     AND c.id_role = r.id_role
     AND f.id_film = c.id_film
     AND f.id_film LIKE 1
@@ -98,8 +110,41 @@ FROM student
 WHERE registeredYear = 2013*/
 
 
---k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
+--k. Liste des acteurs ayant plus de 60 ans (âge révolu et non révolu)
 
+SELECT prenom, 
+		 nom, 
+		 FLOOR(DATEDIFF(CURDATE(), dateNaissance) / 365) AS age, 
+	CASE
+		WHEN FLOOR(DATEDIFF(CURDATE(), dateNaissance) / 365) > 60 THEN '60 ans révolus'
+		WHEN ROUND(DATEDIFF(CURDATE(), dateNaissance) / 365) = 60 THEN '60 ans non-révolus'
+		ELSE 'Moins de 60 ans'
+	END
+FROM personne p, acteur a
+WHERE p.id_personne = a.id_acteur
+ORDER BY age
+
+/*
+SELECT prenom, 
+		 nom, 
+		 DATEDIFF(CURDATE(), dateNaissance) / 365 AS ageLong, 
+		 FLOOR(DATEDIFF(CURDATE(), dateNaissance) / 365) AS ageRevolu, 
+		 ROUND(DATEDIFF(CURDATE(), dateNaissance) / 365) AS agenonRevolu
+FROM personne p, acteur a
+WHERE p.id_personne = a.id_acteur
+AND p.id_personne = 1
+*/
 
 
 --l. Acteurs ayant joué dans 3 films ou plus
+
+    SELECT prenom, nom, COUNT(id_film)
+    FROM personne p
+    JOIN acteur a ON p.id_personne = a.id_personne
+    JOIN casting c ON a.id_acteur = c.id_acteur
+    GROUP BY p.id_personne
+    HAVING COUNT(id_film) >= 3
+
+
+
+
