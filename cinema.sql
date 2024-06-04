@@ -84,8 +84,15 @@
 
 --j. Nombre d'hommes et de femmes parmis les acteurs
 
-    
+    SELECT COUNT(id_acteur) AS total,
+		   COUNT(CASE WHEN sexe = 'homme' THEN 1 END) AS hommes,
+		   COUNT(CASE WHEN sexe = 'femme' THEN 1 END) AS femmes
+FROM acteur a, personne p
+WHERE a.id_personne = p.id_personne
+
 
 --k. Liste des acteurs ayant plus de 50 ans (âge révolu et non révolu)
+
+
 
 --l. Acteurs ayant joué dans 3 films ou plus
